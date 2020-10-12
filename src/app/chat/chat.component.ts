@@ -16,7 +16,7 @@ export class ChatComponent implements OnInit {
   mensajes: Mensaje[] = [];
   notification: Mensaje = new Mensaje();
   notificaciones: Mensaje[]=[];
-  enviar=0;
+  repetir=0;
 
   constructor(private _ngZone: NgZone) {
     window['chat']={component: this, zone: _ngZone}
@@ -25,7 +25,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.client = new Client();
     this.client.webSocketFactory=() =>{
-      return new SockJS("http://localhost:8080/chat-websocket");
+      return new SockJS("https://trabajo-chat-backend.herokuapp.com/chat-websocket");
     }
 
     this.client.onConnect = (frame) => {
