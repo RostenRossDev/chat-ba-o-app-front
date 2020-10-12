@@ -1,0 +1,77 @@
+<div class="container-fluid no-gutters ">
+    <div class="row no-gutters">
+        <div class="card ml-3 mt-2 col-md-5"  onload="repetir( [(ngModel)]='conectado', [(ngModel)]='notification')">
+            <div class="card-heeader">
+                <ul class="nav nav-pills card-header-pills">
+
+                    <li class="nav-item mr-2 ml-5" *ngIf="!conectado">
+                        <input type="text" [(ngModel)]="mensaje.username" id="conectar"  class="form-control" placeholder="Tu Apodo" name="username">
+                    </li>
+                    <li class="nav-item mr-2 ml-5">
+                        <button class="btn btn-success" type="button" (click)="conectar()"
+                        *ngIf="!conectado"  [disabled]="!mensaje.username">Conectar</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-warning" type="button" (click)="desconectar()"
+                        *ngIf="conectado">Cerrar chat</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body" style="overflow-y: scroll; height: 495px;"
+            *ngIf="conectado"> 
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-light text-black" *ngFor="let mensaje of mensajes">
+                        <span *ngIf="mensaje.tipo=='NUEVO_USUARIO'">{{mensaje.fecha | date:'shortTime'}} @{{mensaje.texto}} {{mensaje.username}}</span>
+                        <span *ngIf="mensaje.tipo=='MENSAJE'">{{mensaje.fecha | date:'shortTime'}} {{mensaje.username}} dice:<br>{{mensaje.texto}}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-footer"  *ngIf="conectado"> 
+                <form class="form-inline">
+                    <div class="form-group mx-3">
+                        <input type="text"  [(ngModel)]="mensaje.texto" class="form-control" placeholder="Escribe un mensaje..." name="texto">
+                    </div>
+                    <button class="btn btn-primary" type="submit" (click)="enviarMensaje()">Enviar</button>
+
+                </form>
+            </div>
+        </div>
+        <div class="card ml-3 mt-2 col-md-3" *ngIf="conectado">
+
+            <div class="card-heeader" >
+                <ul class="nav nav-pills card-header-pills">
+                  
+                    <li class="nav-item mr-2 ml-4">
+                        <button class="btn btn-success" id="salir" type="button" (click)="irDeBanio()"
+                        *ngIf="conectado">Salir al baño</button>
+                    </li>
+                    <li class="nav-item  mr-2 ml-4">
+                        <button class="btn btn-warning" id="volver" type="button" (click)="volverDeBanio()"
+                        *ngIf="conectado">Volver del baño</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body" style="overflow-y: scroll; height: 490px;"> 
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-light text-black" *ngFor="let not of notificaciones">
+                        <span *ngIf="not.tipo=='BAÑO'">{{not.fecha | date:'shortTime'}} @ {{not.username}}: {{not.texto}}</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="card ml-3 mt-2 col-md-2">
+            <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+
+                </ul>
+            </div>
+            <div class="card-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
